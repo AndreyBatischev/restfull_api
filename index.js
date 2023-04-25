@@ -2,6 +2,8 @@ import express from "express"
 import mongoose from "mongoose"
 import router from "./router.js";
 import fileUpload from "express-fileupload";
+import * as path from 'path'
+
 
 const PORT = 3000
 
@@ -13,7 +15,11 @@ app.use(express.json())
 app.use(express.static('static'))
 app.use(fileUpload())
 app.use('/api', router)
-
+// app.use("/static", express.static('./static/'));
+// app.use(express.static(path.resolve('static')))
+app.get('/', (req, res) => {
+    res.sendFile(path.resolve('static/client', 'index.html'))
+})
 
 async function startApp() {
     try {
